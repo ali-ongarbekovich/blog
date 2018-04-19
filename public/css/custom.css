@@ -34,7 +34,7 @@
     position: absolute;
 }
 .w-33 {
-    width: calc(100%/3);
+    width: calc(100%/3 - 1%);
 }
 .like, .comment, .repost {
     font-size: 17px;

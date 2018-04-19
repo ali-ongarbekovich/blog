@@ -28,7 +28,7 @@
 
                     <div class="actions mt-2 card shdw-3 w-50" style="display: block">
                         <div class="w-33 p-1 pl-3">
-                            <a href="#" class="like"><i class="fas fa-heart"></i> <span class="amount">1</span></a>
+                            <a href="/like/{!! $post->id !!}" class="like"><i class="fas fa-heart"></i> <span class="amount">1</span></a>
                         </div>
                         <div class="w-33 p-1 pl-3">
                             <a href="#" class="comment"><i class="fas fa-comment"></i> <span class="amount">0</span></a>
@@ -45,4 +45,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('.like').on('click', function (e) {
+        e.preventDefault();
+        let URL = $(this).attr('href');
+        console.log(URL);
+        $.ajax({
+            url: URL
+        });
+    });
+</script>
 @endsection
