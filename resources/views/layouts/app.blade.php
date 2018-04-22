@@ -24,6 +24,7 @@
     <link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/basic.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/dropzone.css') }}">
+    @yield('styles')
 </head>
 <body>
     <div id="app">

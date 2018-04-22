@@ -25,9 +25,11 @@ Route::post('/delete/{id}', 'PostController@remove'); // Remove existing post
 Route::post('/upload', 'PostController@addPicture');
 Route::post('/remove', 'PostController@removePicture');
 
-Route::get('/like/{post_id}', 'ActionController@like');
-Route::get('/dislike/{post_id}', 'ActionController@dislike');
+Route::post('/like/{post_id}', 'ActionController@like');
+Route::post('/dislike/{post_id}', 'ActionController@dislike');
 Route::post('/comment', 'ActionController@addComment');
 Route::get('/comment/{comment_id}', 'ActionController@removeComment');
 Route::post('/repost', 'ActionController@addRepost');
 Route::get('/repost/{repost_id}', 'ActionController@removeRepost');
+
+Route::get('/comments/{post_id}', 'ActionController@getComments');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\User;
 use App\Like;
 use App\Comment;
 use App\Repost;
@@ -18,6 +20,9 @@ class ActionController extends Controller
 
     public function like($post_id)
     {
+        if (Like::find($post_id) != null) {
+            return 1;
+        }
         $like = New Like;
         $like->user_id = Auth::id();
         $like->post_id = $post_id;
@@ -42,7 +47,19 @@ class ActionController extends Controller
         $comment->whom = $request->whom;
         $comment->save();
 
-        return 1;
+        $comment->body = $comment->comment;
+        $comment->name = User::find($comment->user_id)->value('name');
+        return response()->json(['comment' => $comment]);
+    }
+
+    public function getComments($post_id)
+    {
+        $comments = Comment::where('post_id', $post_id)->get();
+        foreach($comments as $comment) {
+            $comment->name = User::find($comment->user_id)->value('name');
+        }
+        $post = Post::find($post_id);
+        return response()->json(['comments' => $comments, 'post' => $post]);
     }
 
     public function removeComment($comment_id)
