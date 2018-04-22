@@ -15,12 +15,13 @@ Route::get('/', 'WelcomeController@index');
 
 
 Route::get('/home', 'PostController@index'); // Main Page
+Route::get('/user/{user_id}', 'PostController@profile'); // Main Page
 Route::get('/create', 'PostController@create'); // Create
 Route::get('/edit/{id}', 'PostController@edit'); // Editor
 
 Route::post('/add', 'PostController@add'); // Post new Post :)
 Route::post('/update/{id}', 'PostController@update'); // Update existing post
-Route::post('/delete/{id}', 'PostController@remove'); // Remove existing post
+Route::get('/delete/{id}', 'PostController@delete'); // Remove existing post
 
 Route::post('/upload', 'PostController@addPicture');
 Route::post('/remove', 'PostController@removePicture');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
+use App\Repost;
 
 use Auth;
 use Illuminate\Http\Request;
@@ -25,18 +27,28 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function profile($user_id)
+    {
+        $user = User::find($user_id);
+        $posts = Post::whereIn('user_id', [Auth::id()])->get();
+        $reposts = Repost::whereIn('user_id', [Auth::id()])->get();
+        return view('profile', compact('posts', 'reposts', 'user'));
+    }
+
     public function index()
     {
         $posts = Post::whereIn('user_id', [Auth::id()])->get();
-
-        return view('home', compact('posts'));
+        $reposts = Repost::whereIn('user_id', [Auth::id()])->get();
+        return view('home', compact('posts', 'reposts'));
     }
 
     public function edit($id)
     {
-        $post = Post::where('user_id', Auth::id())->where('id', $id)->get();
-
-        return view('editor', compact('post'));
+        $post = Post::find($id);
+        if ($post->user_id != Auth::id()) {
+            return redirect('/');
+        }
+        return view('updator', compact('post'));
     }
 
     public function create()
@@ -68,7 +80,7 @@ class PostController extends Controller
     public function delete($id)
     {
         Post::where('user_id', Auth::id())->where('id', $id)->delete();
-
+        Repost::whereIn('post_id', [$id])->delete();
         return back();
     }
 

@@ -5,6 +5,10 @@
 p.reply {
     cursor: pointer;
 }
+.right {
+    float: right;
+    text-align: right;
+}
 .comment-body {
     border-bottom: 1px #efefef solid;
 }

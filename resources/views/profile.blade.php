@@ -1,27 +1,17 @@
 @extends('layouts.app')
 
-@section('styles')
-<style media="screen">
-    a:hover {
-        text-decoration: none;
-    }
-</style>
-@endsection
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-                <a href="/create" class="btn btn-primary br-0">Create a new post</a>
+                <div class="card-header"><img src="{{ asset('/images/nophoto_n.png') }}" alt="Unnamed" class="rounded-circle mr-3" width="40" height="40">{{ $user->name }}</div>
                 @if($reposts != '[]')
                     <div class="p-3">
                         @foreach($reposts as $repost)
                             <div class="card mt-3">
                                 <div class="card-header">
-                                    {{ $repost->comment }}
-                                    <a href="/repost/{{ $repost->post->id }}" class="right" style="font-size:30px;">&times;</a><br>
+                                    {{ $repost->comment }} <br>
                                     <span class="date">{{ $repost->updated_at->diffForHumans() }}</span>
                                 </div>
                                 <div class="p-2">
@@ -31,7 +21,7 @@
                                 </div>
                                 @if($repost->post->file != null)
                                 <div>
-                                    <img src="{!! $repost->post->file !!}" alt="{!! $repost->post->title !!}" class="img-fluid picture">
+                                    <img src="/{!! $repost->post->file !!}" alt="{!! $repost->post->title !!}" class="img-fluid picture">
                                 </div>
                                 @endif
                             </div>
@@ -43,18 +33,15 @@
                         @foreach($posts as $post)
                             <div class="card mt-3">
                                 <div class="card-header">
-                                    {{ $post->title }}
-                                    <a href="/edit/{{ $post->id }}" class="right"><i class="fas fa-pencil-alt"></i></a><br>
-                                    <a href="/delete/{{ $post->id }}" class="right" style="font-size:30px;">&times;</a><br>
+                                    {{ $post->title }} <br>
                                     <span class="date">{{ $post->updated_at->diffForHumans() }}</span>
-
                                 </div>
                                 <div class="p-2">
                                     {!! $post->body !!}
                                 </div>
                                 @if($post->file != null)
                                 <div>
-                                    <img src="{!! $post->file !!}" alt="{!! $post->title !!}" class="img-fluid picture">
+                                    <img src="/{!! $post->file !!}" alt="{!! $post->title !!}" class="img-fluid picture">
                                 </div>
                                 @endif
                             </div>

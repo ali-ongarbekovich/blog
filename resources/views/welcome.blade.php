@@ -28,7 +28,7 @@
                 <div class="mb-5">
                     <div class="user">
                         <div class="avatar"><img src="{{ asset('/images/nophoto_n.png') }}" alt="noImage" class="rounded wh-100"></div>
-                        <span class="abs">{{ $post->user->name }}</span>
+                        <span class="abs"><a href="/user/{{ $post->user_id }}" style="font-size: 14px !important; color: black;">{{ $post->user->name }}</a></span>
                     </div>
                     <div class="card shdw-3">
                         <div class="card-header">
@@ -69,7 +69,11 @@
                             </button>
                         </div>
                         <div class="w-33 p-1 pl-3">
-                            <a href="#" class="repost"><i class="fas fa-share"></i> <span class="amount">{!! $post->reposts !!}</span></a>
+                            <button type="button" class="repost" data-toggle="modal" data-target="#repost" pid="{{ $post->id }}">
+                                <i class="fas fa-share"></i>
+                                @csrf
+                                <span class="amount">{!! $post->reposts !!}</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -109,6 +113,29 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="repost" tabindex="-1" role="dialog" aria-labelledby="post" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="postal">Repost to my page</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Your comment(optional)</div>
+            <form action="/repost" class="p-3" method="post" id="doRepost">
+                @csrf
+                <div class="input-group">
+                    <img src="{{ asset('/images/nophoto_n.png') }}" alt="Unnamed" class="rounded-circle mr-3" width="40" height="40">
+                    <input type="text" class="form-control" placeholder="type something..." aria-label="Recipient's username" aria-describedby="basic-addon2" id="commentRepost" autocomplete="off" >
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -117,4 +144,20 @@
 <script src="{{ asset('/js/comments.js') }}" charset="utf-8"></script>
 <script src="{{ asset('/js/addComment.js') }}" charset="utf-8"></script>
 <script src="{{ asset('/js/sendComment.js') }}" charset="utf-8"></script>
+<script src="{{ asset('/js/reposts.js') }}" charset="utf-8"></script>
+<script src="{{ asset('/js/doRepost.js') }}" charset="utf-8"></script>
+@endsection
+
+@section('scripts')
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $('.like').on('click', function (e) {
+        e.preventDefault();
+        let URL = $(this).attr('href');
+        console.log(URL);
+        $.ajax({
+            url: URL
+        });
+    });
+</script>
 @endsection

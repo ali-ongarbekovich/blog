@@ -74,6 +74,7 @@ class ActionController extends Controller
         $repost = new Repost;
         $repost->user_id = Auth::id();
         $repost->post_id = $request->post_id;
+        $repost->comment = $request->comment;
         $repost->save();
 
         return 1;
@@ -81,8 +82,8 @@ class ActionController extends Controller
 
     public function removeRepost($repost_id)
     {
-        Repost::where('user_id', Auth::id())->where('id', $repost_id)->delete();
+        Repost::where('user_id', Auth::id())->where('post_id', $repost_id)->delete();
 
-        return 1;
+        return back();
     }
 }
